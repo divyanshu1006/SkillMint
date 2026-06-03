@@ -1,6 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function CustomCursor() {
+  const [isFinePointer, setIsFinePointer] = useState(
+    typeof window !== 'undefined' ? window.matchMedia('(pointer: fine)').matches : false
+  );
+  
   const cursorOuterRef = useRef<HTMLDivElement>(null);
   const cursorInnerRef = useRef<HTMLDivElement>(null);
   
@@ -8,6 +12,13 @@ export function CustomCursor() {
   const mouse = useRef({ x: 0, y: 0 });
   // Track current cursor coordinates (for lerping)
   const cursor = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer: fine)');
+    const handler = (e: MediaQueryListEvent) => setIsFinePointer(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     let animationFrameId: number;
@@ -58,6 +69,8 @@ export function CustomCursor() {
     window.addEventListener('mouseover', handleMouseOver);
     return () => window.removeEventListener('mouseover', handleMouseOver);
   }, []);
+
+  if (!isFinePointer) return null;
 
   return (
     <div
