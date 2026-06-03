@@ -49,7 +49,7 @@ export function Navbar({ onJoinClick }: NavbarProps) {
         </a>
 
         {/* Center: Horizontal Links */}
-        <ul className="hidden lg:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-8">
           {navLinks.map(link => (
             <li key={link.label}>
               <a
@@ -65,7 +65,7 @@ export function Navbar({ onJoinClick }: NavbarProps) {
         </ul>
 
         {/* Right: Actions */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-6">
           <button
             onClick={() => { scrollToSection('#waitlist'); onJoinClick(); }}
             className="pill-btn pill-btn-primary px-6 py-2.5 text-[14px]"
@@ -76,7 +76,7 @@ export function Navbar({ onJoinClick }: NavbarProps) {
 
         {/* Mobile Hamburger */}
         <button
-          className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+          className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -86,7 +86,7 @@ export function Navbar({ onJoinClick }: NavbarProps) {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed inset-0 top-20 bg-white/95 backdrop-blur-xl z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col p-8 ${
+        className={`md:hidden fixed inset-0 top-20 bg-white/95 backdrop-blur-xl z-40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col p-8 ${
           mobileOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
