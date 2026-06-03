@@ -50,10 +50,10 @@ export function HeroSection() {
         
         {/* ── Main Content ── */}
         <div className="max-w-4xl flex flex-col items-center justify-center flex-1 relative z-20 w-full">
-          <h1 className="display-font text-[48px] md:text-[72px] font-bold text-slate-900 leading-[1.1] tracking-tight mb-6 w-full">
-            <span className="whitespace-nowrap"><TypewriterText text={line1} delayOffset={delay1} /></span>
-            <span className="whitespace-nowrap"><TypewriterText text={line2} delayOffset={delay2} className="text-gradient" /></span><br />
-            <span className="whitespace-nowrap"><TypewriterText text={line3} delayOffset={delay3} /></span>
+          <h1 className="display-font text-[40px] sm:text-[48px] md:text-[72px] font-bold text-slate-900 leading-[1.1] tracking-tight mb-6 w-full px-2">
+            <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line1} delayOffset={delay1} /></span>
+            <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line2} delayOffset={delay2} className="text-gradient" /></span><br className="hidden sm:block" />
+            <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line3} delayOffset={delay3} /></span>
           </h1>
           
           <p className="text-[18px] md:text-[20px] text-slate-600 leading-[1.6] max-w-2xl mb-10 md:mb-12 reveal-base is-visible" style={{ transitionDelay: '100ms' }}>
