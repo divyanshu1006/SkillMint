@@ -64,11 +64,36 @@ export function WaitlistForm({ variant = 'light', onSuccess }: WaitlistFormProps
       inputRef.current?.focus();
       return;
     }
+    
     setStatus('loading');
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    setStatus('success');
-    setEmail('');
-    onSuccess?.();
+    
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: '6a9ab023-1773-4bef-94bb-b845a7eb2e33',
+          email: email,
+          subject: 'New Waitlist Signup from SkillMint',
+        }),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setEmail('');
+        onSuccess?.();
+      } else {
+        setStatus('error');
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 600);
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

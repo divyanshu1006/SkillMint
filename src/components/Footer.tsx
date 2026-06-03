@@ -1,8 +1,37 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function Footer() {
   const svgRef = useRef<SVGSVGElement>(null);
   const textRef = useRef<SVGTextElement>(null);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes('@')) return;
+    setStatus('loading');
+    
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: '6a9ab023-1773-4bef-94bb-b845a7eb2e33',
+          email: email,
+          subject: 'New Newsletter Subscription from SkillMint Footer',
+        }),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setEmail('');
+        setTimeout(() => setStatus('idle'), 3000);
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
 
   useEffect(() => {
     const fitWatermark = () => {
@@ -184,15 +213,20 @@ export function Footer() {
               >
                 <input 
                   type="email" 
-                  placeholder="Enter email address" 
-                  className="flex-1 px-3.5 py-[11px] bg-transparent border-none text-[13.5px] text-[#111827] placeholder-[#9ca3af] focus:outline-none"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  disabled={status === 'loading' || status === 'success'}
+                  placeholder={status === 'success' ? "Thanks for subscribing!" : "Enter email address"} 
+                  className="flex-1 px-3.5 py-[11px] bg-transparent border-none text-[13.5px] text-[#111827] placeholder-[#9ca3af] focus:outline-none disabled:opacity-50"
                 />
                 <button 
                   type="button" 
-                  className="px-[22px] py-[11px] bg-[#111214] text-white font-semibold text-[13.5px] rounded-lg transition-all duration-200 hover:bg-black hover:-translate-y-[1px]"
+                  onClick={handleSubscribe}
+                  disabled={status === 'loading' || status === 'success'}
+                  className="px-[22px] py-[11px] bg-[#111214] text-white font-semibold text-[13.5px] rounded-lg transition-all duration-200 hover:bg-black hover:-translate-y-[1px] disabled:opacity-50 disabled:hover:translate-y-0"
                   style={{ boxShadow: '0 6px 20px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.15)' }}
                 >
-                  Subscribe
+                  {status === 'loading' ? '...' : status === 'success' ? '✓' : 'Subscribe'}
                 </button>
               </div>
             </div>
