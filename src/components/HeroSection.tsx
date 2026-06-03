@@ -1,8 +1,5 @@
 import { ShieldCheck, Zap, Users, Target } from 'lucide-react';
 
-interface HeroSectionProps {
-  onSuccess: () => void;
-}
 
 const TypewriterText = ({ text, delayOffset = 0, className = "" }: { text: string, delayOffset?: number, className?: string }) => {
   return (
