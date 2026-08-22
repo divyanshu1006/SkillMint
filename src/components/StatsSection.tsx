@@ -22,30 +22,30 @@ function StatItem({ value, suffix, label, isVisible, delay }: StatItemProps) {
     >
       <div className="flex items-end gap-0 mb-2">
         <span
-          className="text-[48px] font-extrabold text-white leading-none"
+          className="text-[44px] sm:text-[48px] font-extrabold text-white leading-none tracking-tight"
           style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
         >
           {count}
         </span>
         <span
-          className="text-[48px] font-extrabold text-white leading-none"
+          className="text-[44px] sm:text-[48px] font-extrabold text-[#60a5fa] leading-none"
           style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
         >
           {suffix}
         </span>
       </div>
-      {/* Mint underline */}
-      <div className="w-8 h-[3px] rounded-full bg-[#0A66C2] mb-3" />
-      <p className="text-[14px] text-[#94A3B8] text-center max-w-[120px]">{label}</p>
+      {/* Blue underline */}
+      <div className="w-8 h-[3px] rounded-full bg-[#1e5dd7] mb-3" />
+      <p className="text-[13.5px] text-[#94A3B8] text-center max-w-[130px] font-medium leading-tight">{label}</p>
     </div>
   );
 }
 
 const stats = [
-  { value: 500, suffix: '+', label: 'Beta Spots Available' },
-  { value: 75, suffix: '%', label: 'Resumes Rejected by ATS' },
-  { value: 8, suffix: 'hrs', label: 'Saved Per Hire Weekly' },
-  { value: 3, suffix: 'x', label: 'Faster Time-to-Hire' },
+  { value: 75, suffix: '%', label: 'Resumes Auto-Rejected by ATS' },
+  { value: 6, suffix: 's', label: 'Average Initial Review Time' },
+  { value: 88, suffix: '%', label: 'Signal Lost in Unverified CVs' },
+  { value: 100, suffix: '%', label: 'Objective Code Assessment' },
 ];
 
 export function StatsSection() {
@@ -56,20 +56,20 @@ export function StatsSection() {
       <div className="max-w-5xl mx-auto px-6">
         {/* Headline */}
         <h2
-          className={`text-[clamp(20px,3vw,28px)] font-bold text-white text-center max-w-[480px] mx-auto mb-12 leading-[1.3] reveal-base ${isVisible ? 'is-visible' : ''}`}
+          className={`text-[clamp(20px,3vw,28px)] font-bold text-white text-center max-w-[520px] mx-auto mb-12 leading-[1.3] reveal-base ${isVisible ? 'is-visible' : ''}`}
           style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
         >
-          The Numbers Behind the Problem — And Our Solution.
+          The Industry Data Behind the Broken Hiring Paradigm.
         </h2>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`flex items-center ${i < stats.length - 1 ? 'border-r border-[#1E293B] last:border-r-0' : ''}`}
+              className={`flex items-center ${i < stats.length - 1 ? 'md:border-r md:border-[#1E293B]' : ''}`}
             >
-              <div className="flex-1 px-6 py-2">
+              <div className="flex-1 px-4 sm:px-6 py-2">
                 <StatItem
                   value={stat.value}
                   suffix={stat.suffix}
@@ -85,3 +85,5 @@ export function StatsSection() {
     </section>
   );
 }
+
+export default StatsSection;

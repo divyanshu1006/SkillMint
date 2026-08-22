@@ -1,5 +1,6 @@
-import { ShieldCheck, Zap, Users, Target } from 'lucide-react';
-
+import { ShieldCheck, Zap, Users, Target, Sparkles, ArrowRight, Terminal } from 'lucide-react';
+import { FlipWord } from './FlipWord';
+import { LightBeamButton } from './LightBeamButton';
 
 const TypewriterText = ({ text, delayOffset = 0, className = "" }: { text: string, delayOffset?: number, className?: string }) => {
   return (
@@ -10,7 +11,7 @@ const TypewriterText = ({ text, delayOffset = 0, className = "" }: { text: strin
           className={`inline-block opacity-0 ${className}`}
           style={{ 
             animation: `typeChar 0.1s forwards`,
-            animationDelay: `${delayOffset + i * 50}ms` 
+            animationDelay: `${delayOffset + i * 45}ms` 
           }}
         >
           {char === ' ' ? '\u00A0' : char}
@@ -23,14 +24,14 @@ const TypewriterText = ({ text, delayOffset = 0, className = "" }: { text: strin
 export function HeroSection() {
   const line1 = "Verification, ";
   const line2 = "solved.";
-  const line3 = "Prove what you can do.";
   
-  const delay1 = 200; 
-  const delay2 = delay1 + (line1.length * 50);
-  const delay3 = delay2 + (line2.length * 50) + 300; // tiny pause before line 3
+  const delay1 = 150; 
+  const delay2 = delay1 + (line1.length * 45);
+
+  const flipWords = ["Build.", "Ship.", "Solve.", "Architect.", "Master."];
 
   return (
-    <section id="hero" className="relative w-full min-h-screen pt-[160px] pb-24 overflow-hidden mesh-bg flex flex-col items-center">
+    <section id="hero" className="relative w-full min-h-screen pt-[140px] md:pt-[160px] pb-20 md:pb-24 overflow-hidden mesh-bg flex flex-col items-center justify-between">
       
       {/* ── Video Background ── */}
       <video
@@ -43,60 +44,99 @@ export function HeroSection() {
         style={{ transform: 'translateZ(0)' }}
       />
 
-      {/* ── Spotlight Cursor Effect ── */}
-      {/* (In a full implementation, you'd track mouse X/Y and update a radial gradient position, 
-          but for now we use a static central mesh gradient handled in index.css) */}
-      <div className="relative z-10 w-full flex-1 max-w-7xl mx-auto px-6 md:px-10 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full flex-1 max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex flex-col items-center text-center">
         
+        {/* ── Authentic Early Access Top Pill ── */}
+        <div 
+          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)] mb-8 transition-transform duration-300 hover:scale-105 cursor-pointer"
+          onClick={() => document.querySelector('#waitlist')?.scrollIntoView({ behavior: 'smooth' })}
+          style={{ animation: 'fadeSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards' }}
+        >
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+          </span>
+          <span className="text-[13px] font-semibold text-slate-800">
+            <span className="text-[#1e5dd7] font-bold">Early Access Program</span> • Apply to join the developer cohort
+          </span>
+          <Sparkles className="w-3.5 h-3.5 text-[#1e5dd7] ml-0.5" />
+        </div>
+
         {/* ── Main Content ── */}
         <div className="max-w-4xl flex flex-col items-center justify-center flex-1 relative z-20 w-full">
-          <h1 className="display-font text-[40px] sm:text-[48px] md:text-[72px] font-bold text-slate-900 leading-[1.1] tracking-tight mb-6 w-full px-2">
+          <h1 className="display-font text-[36px] sm:text-[48px] md:text-[68px] lg:text-[76px] font-extrabold text-slate-900 leading-[1.08] tracking-tight mb-6 w-full px-2">
             <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line1} delayOffset={delay1} /></span>
-            <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line2} delayOffset={delay2} className="text-gradient" /></span><br className="hidden sm:block" />
-            <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line3} delayOffset={delay3} /></span>
+            <span className="inline-block whitespace-normal sm:whitespace-nowrap"><TypewriterText text={line2} delayOffset={delay2} className="text-gradient" /></span>
+            <br />
+            <span className="inline-flex items-baseline flex-wrap justify-center gap-x-3 mt-1 sm:mt-2">
+              <span className="text-slate-900">Prove what you can</span>
+              <span className="text-[#1e5dd7] font-black inline-block text-left">
+                <FlipWord 
+                  words={flipWords} 
+                  interval={2400} 
+                  duration={350} 
+                  wordClassName="text-[#1e5dd7] drop-shadow-sm" 
+                />
+              </span>
+            </span>
           </h1>
           
-          <p className="text-[18px] md:text-[20px] text-slate-600 leading-[1.6] max-w-2xl mb-10 md:mb-12 reveal-base is-visible" style={{ transitionDelay: '100ms' }}>
-            The resume is dead. Skill Mint uses AI to assess real-world ability—bypassing ATS filters and providing a credential that employers actually trust.
+          <p className="text-[17px] sm:text-[19px] md:text-[21px] text-slate-600 leading-[1.6] max-w-2xl mb-8 md:mb-10 reveal-base is-visible font-normal px-4" style={{ transitionDelay: '100ms' }}>
+            The traditional resume is broken. SkillMint evaluates your actual code and architecture in real-world environments—giving you an authentic, verifiable proof of competence.
           </p>
 
-          {/* ── CTA Button ── */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 reveal-base is-visible w-full sm:w-auto" style={{ transitionDelay: '200ms' }}>
-            <button
+          {/* ── High-Converting CTA Area ── */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-base is-visible w-full sm:w-auto mb-10" style={{ transitionDelay: '200ms' }}>
+            <LightBeamButton
               onClick={() => document.querySelector('#waitlist')?.scrollIntoView({ behavior: 'smooth' })}
-              className="pill-btn pill-btn-primary px-8 py-4 text-[16px] w-full sm:w-auto"
+              className="w-full sm:w-auto px-9 py-4 text-[16px]"
+              gradientColors={['#1e5dd7', '#60a5fa', '#3b82f6']}
+              glowColor="rgba(30, 93, 215, 0.45)"
             >
-              Request Early Access
+              <span>Request Early Access</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </LightBeamButton>
+            
+            <button
+              onClick={() => document.querySelector('#bento')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-6 py-4 rounded-full bg-white/80 hover:bg-white text-slate-700 hover:text-slate-900 text-[15px] font-semibold border border-slate-200 shadow-sm transition-all duration-200 hover:shadow hover:-translate-y-0.5 cursor-pointer w-full sm:w-auto"
+            >
+              Explore Verification Engine
             </button>
+          </div>
+
+          {/* ── Genuine Mission Statement Badge ── */}
+          <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm font-medium mb-12 bg-white/60 px-4 py-2 rounded-full border border-slate-200/60 shadow-2xs">
+            <Terminal className="w-4 h-4 text-[#1e5dd7]" />
+            <span>Merit-first assessment • Built for developers, engineers, and creators</span>
           </div>
         </div>
 
-        {/* ── Bottom Row Glass Badges ── */}
-        <div className="w-full flex flex-wrap justify-center gap-4 mt-12 mb-12 md:mb-16 relative z-10">
+        {/* ── Authority & Verifiable Capability Badges ── */}
+        <div className="w-full flex flex-wrap justify-center gap-3.5 md:gap-4 mt-4 mb-4 relative z-10">
           {[
-            { icon: <ShieldCheck className="w-5 h-5 text-blue-500" />, label: 'AI Monitored', glow: 'shadow-[0_8px_30px_rgba(59,130,246,0.3)] border-blue-500/50' },
-            { icon: <Zap className="w-5 h-5 text-purple-500" />, label: 'Instant Results', glow: 'shadow-[0_8px_30px_rgba(168,85,247,0.3)] border-purple-500/50' },
-            { icon: <Users className="w-5 h-5 text-emerald-500" />, label: 'Employer Ready', glow: 'shadow-[0_8px_30px_rgba(16,185,129,0.3)] border-emerald-500/50' },
-            { icon: <Target className="w-5 h-5 text-orange-500" />, label: 'Real-world Tasks', glow: 'shadow-[0_8px_30px_rgba(249,115,22,0.3)] border-orange-500/50' },
+            { icon: <ShieldCheck className="w-5 h-5 text-blue-600" />, label: 'AI Proctor & Code Sandbox', glow: 'shadow-[0_8px_30px_rgba(59,130,246,0.25)] border-blue-500/40' },
+            { icon: <Zap className="w-5 h-5 text-purple-600" />, label: 'Objective Proof Credentials', glow: 'shadow-[0_8px_30px_rgba(168,85,247,0.25)] border-purple-500/40' },
+            { icon: <Users className="w-5 h-5 text-emerald-600" />, label: 'Direct Talent Matching', glow: 'shadow-[0_8px_30px_rgba(16,185,129,0.25)] border-emerald-500/40' },
+            { icon: <Target className="w-5 h-5 text-orange-600" />, label: 'Real Production Tasks', glow: 'shadow-[0_8px_30px_rgba(249,115,22,0.25)] border-orange-500/40' },
           ].map((item, i) => (
             <div 
               key={i} 
-              className="group relative flex flex-row items-center gap-3 px-6 py-3 rounded-full bg-white/70 backdrop-blur-xl border border-white/90 shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-pointer transition-transform duration-500 ease-out hover:-translate-y-1.5"
+              className="group relative flex flex-row items-center gap-3 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-xl border border-white/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1"
               style={{ 
                 animation: `fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards`,
-                animationDelay: `${i * 150 + 200}ms`,
-                opacity: 0 // Start hidden for the entrance animation
+                animationDelay: `${i * 120 + 200}ms`,
+                opacity: 0
               }}
             >
-              {/* Smooth Hover Glow Element (Fades in on hover) */}
               <div 
-                className={`absolute inset-0 rounded-full border opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 pointer-events-none ${item.glow}`}
+                className={`absolute inset-0 rounded-full border opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 pointer-events-none ${item.glow}`}
               />
               
-              <div className="relative z-10 bg-white rounded-full p-2 shadow-sm transition-transform duration-500 ease-out group-hover:scale-110">
+              <div className="relative z-10 bg-slate-50 rounded-full p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-110">
                 {item.icon}
               </div>
-              <span className="relative z-10 text-[14.5px] font-bold text-slate-800 tracking-tight transition-colors duration-500 group-hover:text-black">
+              <span className="relative z-10 text-[13.5px] font-bold text-slate-800 tracking-tight transition-colors duration-300 group-hover:text-blue-700">
                 {item.label}
               </span>
             </div>
@@ -108,3 +148,5 @@ export function HeroSection() {
     </section>
   );
 }
+
+export default HeroSection;

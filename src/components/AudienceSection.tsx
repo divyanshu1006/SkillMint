@@ -168,7 +168,7 @@ export function AudienceSection() {
                     <span className="text-[13px] font-bold text-[#065F46]">Skill Mint Verified</span>
                   </div>
 
-                  <p className="text-[11px] text-[#94A3B8] text-center">Accepted by 200+ companies</p>
+                  <p className="text-[11px] text-[#94A3B8] text-center">Designed for modern engineering teams</p>
                 </div>
               </div>
             </div>
